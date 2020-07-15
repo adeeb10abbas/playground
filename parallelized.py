@@ -29,11 +29,11 @@ def run(k, salt):
         sys.exit()
 
 def main():
-    pool = multiprocessing.Pool(6)
+    pool = multiprocessing.Pool(os.cpu_count() - 1)
     length = range(len(combinations))
     start_time = time.time()
     while True:
-        salt = bp.gensalt(12)
+        salt = bp.gensalt()
         runner = partial(run, salt=salt)
         for _ in tqdm.tqdm(pool.imap_unordered(runner, length), total=len(combinations)):
             pass
